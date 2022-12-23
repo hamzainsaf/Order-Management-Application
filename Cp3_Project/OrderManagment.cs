@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.IO;
 
 namespace Cp3_Project
 {
@@ -24,6 +25,8 @@ namespace Cp3_Project
             table.Columns.Add("Unit Price");
             table.Columns.Add("Price");
             table.Columns.Add("Quantity");
+            table.Columns.Add("Date");
+            table.Columns.Add("Total");
         }
         
         #region
@@ -106,7 +109,7 @@ namespace Cp3_Project
                 {
 
 
-                    table.Rows.Add(proName.Text, pri_ce.Text, Tot.Text, numericUpDown1.Value.ToString());
+                    table.Rows.Add(proName.Text, pri_ce.Text, Tot.Text, numericUpDown1.Value.ToString(), DateTime.Today.ToString("ddMMyyyy"));
                     dataGridView2.DataSource = table;
                     flag = 0;
                     total = Convert.ToInt16(numericUpDown1.Value) * Convert.ToInt16(pri_ce.Text);
@@ -115,7 +118,9 @@ namespace Cp3_Project
             }
 
             sum = sum + total;
+
             Total_sum.Text = sum.ToString();
+            
             updateproduct();
             
 
@@ -124,7 +129,7 @@ namespace Cp3_Project
            
 
         }
-
+       
     
         #region
         void updateproduct()
@@ -133,7 +138,7 @@ namespace Cp3_Project
             int newqty = qty - Convert.ToInt16(numericUpDown1.Value);
             if (newqty < 0)
             {
-                MessageBox.Show("OPeration Failed");
+                MessageBox.Show("Operation Failed");
             }
             else
             {
@@ -158,12 +163,47 @@ namespace Cp3_Project
             cmd.ExecuteNonQuery();
             MessageBox.Show("Order Added");
             db.con.Close();
+            DataRow row = table.NewRow();
+            row["Total"] = sum;
+            table.Rows.Add(row);
+            save_csv();
 
         }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             savorder();
+        }
+
+
+        void save_csv()
+        {
+            string ordername = id.Trim() + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string filePath = "C:\\Users\\48512\\source\\repos\\Cp3_Project\\Cp3_Project\\Orders\\" + ordername + ".csv";
+            using (StreamWriter writer = File.CreateText(filePath))
+            
+            {
+               
+                foreach (DataColumn column in table.Columns)
+                {
+                    writer.Write(column.ColumnName + ",");
+                }
+                writer.WriteLine();
+
+                // Write the data rows to the file
+                foreach (DataRow row in table.Rows)
+                {
+                    foreach (var value in row.ItemArray)
+                    {
+                        writer.Write(value + ",");
+                    }
+                    writer.WriteLine();
+                }
+
+                // Close the StreamWriter object and save the data
+                writer.Close();
+            }
+
         }
 
      
@@ -180,9 +220,10 @@ namespace Cp3_Project
             Environment.Exit(0);
 
         }
+
         #endregion
 
-
+       
     }
 }
 

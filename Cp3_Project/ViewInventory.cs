@@ -126,7 +126,7 @@ namespace Cp3_Project
                 Clear();
             }
             
-            if (qty <= 0)
+            if (newqty <= 0)
             {
                 MessageBox.Show("Add more than 0");
             }
