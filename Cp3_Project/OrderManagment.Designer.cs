@@ -36,7 +36,6 @@
             this.AddToOrder = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.proName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -48,6 +47,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.pri_ce = new System.Windows.Forms.Label();
             this.Tot = new System.Windows.Forms.Label();
+            this.proName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -128,13 +128,6 @@
             this.label5.Size = new System.Drawing.Size(17, 20);
             this.label5.TabIndex = 10;
             this.label5.Text = "$";
-            // 
-            // proName
-            // 
-            this.proName.Location = new System.Drawing.Point(31, 339);
-            this.proName.Name = "proName";
-            this.proName.Size = new System.Drawing.Size(137, 27);
-            this.proName.TabIndex = 11;
             // 
             // label6
             // 
@@ -238,11 +231,21 @@
             this.Tot.TabIndex = 24;
             this.Tot.Text = "__________";
             // 
+            // proName
+            // 
+            this.proName.AutoSize = true;
+            this.proName.Location = new System.Drawing.Point(31, 346);
+            this.proName.Name = "proName";
+            this.proName.Size = new System.Drawing.Size(69, 20);
+            this.proName.TabIndex = 25;
+            this.proName.Text = "__________";
+            // 
             // OrderManagment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1025, 575);
+            this.Controls.Add(this.proName);
             this.Controls.Add(this.Tot);
             this.Controls.Add(this.pri_ce);
             this.Controls.Add(this.button2);
@@ -254,7 +257,6 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.proName);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.AddToOrder);
@@ -283,7 +285,6 @@
         private System.Windows.Forms.Button AddToOrder;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox proName;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
@@ -295,5 +296,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label pri_ce;
         private System.Windows.Forms.Label Tot;
+        private System.Windows.Forms.Label proName;
     }
 }

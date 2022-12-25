@@ -155,7 +155,7 @@ namespace Cp3_Project
             SqlCommand cmd = new SqlCommand("addorders", db.con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@date", dateTimePicker1.Value.Date);
+            cmd.Parameters.AddWithValue("@date", DateTime.Now);
             cmd.Parameters.AddWithValue("@username", id.Trim());
             cmd.Parameters.AddWithValue("@totalprice", Tot.Text.Trim());
 
@@ -179,7 +179,7 @@ namespace Cp3_Project
         void save_csv()
         {
             string ordername = id.Trim() + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            string filePath = "C:\\Users\\48512\\source\\repos\\Cp3_Project\\Cp3_Project\\Orders\\" + ordername + ".csv";
+            string filePath = "C:\\Users\\48512\\source\\repos\\Order-Management-Application\\Cp3_Project\\Orders\\Orders" + ordername + ".csv";
             using (StreamWriter writer = File.CreateText(filePath))
             
             {
