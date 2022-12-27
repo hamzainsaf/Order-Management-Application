@@ -45,6 +45,30 @@ namespace Cp3_Project
 
 
         }
+        string value = "";
+        private void getid()
+        {
+
+            string query = "SELECT MAX(id) FROM tb3_orders";
+
+            db.con.Open();
+
+            using (SqlCommand command = new SqlCommand(query, db.con))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        value = reader.GetValue(0).ToString();
+
+                    }
+
+                }
+            }
+
+
+
+        }
         #endregion
 
 
@@ -151,13 +175,14 @@ namespace Cp3_Project
         }
         void savorder()
         {
+            
             db.con.Open();
             SqlCommand cmd = new SqlCommand("addorders", db.con);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@date", DateTime.Now);
             cmd.Parameters.AddWithValue("@username", id.Trim());
-            cmd.Parameters.AddWithValue("@totalprice", Tot.Text.Trim());
+            cmd.Parameters.AddWithValue("@totalprice", Total_sum.Text.Trim());
 
 
             cmd.ExecuteNonQuery();
@@ -166,7 +191,9 @@ namespace Cp3_Project
             DataRow row = table.NewRow();
             row["Total"] = sum;
             table.Rows.Add(row);
+            getid();
             save_csv();
+            
 
         }
         
@@ -178,7 +205,7 @@ namespace Cp3_Project
 
         void save_csv()
         {
-            string ordername = id.Trim() + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string ordername = value.Trim()+"-" + DateTime.Now.ToString("yyyyMMdd");
             string filePath = "C:\\Users\\48512\\source\\repos\\Order-Management-Application\\Cp3_Project\\Orders\\Orders" + ordername + ".csv";
             using (StreamWriter writer = File.CreateText(filePath))
             
@@ -190,7 +217,7 @@ namespace Cp3_Project
                 }
                 writer.WriteLine();
 
-                // Write the data rows to the file
+                
                 foreach (DataRow row in table.Rows)
                 {
                     foreach (var value in row.ItemArray)
@@ -200,7 +227,6 @@ namespace Cp3_Project
                     writer.WriteLine();
                 }
 
-                // Close the StreamWriter object and save the data
                 writer.Close();
             }
 

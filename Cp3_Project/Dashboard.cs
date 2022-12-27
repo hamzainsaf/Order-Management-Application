@@ -28,12 +28,6 @@ namespace Cp3_Project
            
         }
 
-      
-
-
-
-
-
         private void button2_Click(object sender, EventArgs e)
         {
             ViewInventory V1 = new ViewInventory();
@@ -41,19 +35,15 @@ namespace Cp3_Project
             
         }
 
-            private void button4_Click(object sender, EventArgs e)
+     private void button4_Click(object sender, EventArgs e)
 
-             {
-            OrderManagment AO1 = new OrderManagment();
+       {
+           OrderManagment AO1 = new OrderManagment();
             
-                AO1.ShowDialog();
+          AO1.ShowDialog();
             
 
-          }
-
-        
-
-       
+      }
 
         private void button3_Click(object sender, EventArgs e)
         {

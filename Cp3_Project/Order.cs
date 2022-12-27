@@ -9,9 +9,11 @@ using System.Windows.Forms;
 
 namespace Cp3_Project
 {
+    
     public partial class Order : Form
     {
         DataTable table = new DataTable();
+    
         MyConnection db = new MyConnection();
 
         public Order()
@@ -40,11 +42,13 @@ namespace Cp3_Project
 
 
         }
+       
 
         private void button1_Click(object sender, EventArgs e)
         {
             
             this.Close();
+            
             
         }
     }
