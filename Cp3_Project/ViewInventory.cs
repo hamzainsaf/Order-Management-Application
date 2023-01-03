@@ -39,17 +39,22 @@ namespace Cp3_Project
         int qtydel;
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString() != "")
-            {
-                textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
-                textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
-                qty = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-                qtydel = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-            }
-            else
+            if (e.RowIndex >= 0)
             {
 
-                MessageBox.Show("Empty row selected");
+
+                if (dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString() != "")
+                {
+                    textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    qty = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
+                    qtydel = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
+                }
+                else
+                {
+
+                    MessageBox.Show("Empty row selected");
+                }
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+﻿  using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,26 +15,29 @@ namespace Cp3_Project
     {
         DataTable table = new DataTable();
         string id = Signin.SetValueForText1;
+        string tablename = "Inventory1";
 
         MyConnection db = new MyConnection();
         public OrderManagment()
         {
             InitializeComponent();
-            FILLDGV();
+            FILLDGV(tablename);
             table.Columns.Add("Name");
             table.Columns.Add("Unit Price");
             table.Columns.Add("Price");
             table.Columns.Add("Quantity");
             table.Columns.Add("Date");
             table.Columns.Add("Total");
+
         }
         
         #region
         // Visulaising the Data
-        private void FILLDGV()
+        public void FILLDGV(string tablename)
         {
+            
             db.con.Open();
-            string query = "Select * From Inventory1";
+            string query = "Select * From "+ tablename;
             SqlDataAdapter da = new SqlDataAdapter(query, db.con);
             SqlCommandBuilder builder = new SqlCommandBuilder(da);
             var dt = new DataSet();
@@ -78,16 +81,21 @@ namespace Cp3_Project
         int sum = 0;
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString() != "")
+            if (e.RowIndex >= 0)
             {
-                proName.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
-                pri_ce.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
-                qty = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-                flag = 1;
-            }
-            else
-            {
-                MessageBox.Show("Empty Row selected");
+
+
+                if (dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString() != "")
+                {
+                    proName.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    pri_ce.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                    qty = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
+                    flag = 1;
+                }
+                else
+                {
+                    MessageBox.Show("Empty Row selected");
+                }
             }
 
             
@@ -133,7 +141,7 @@ namespace Cp3_Project
                 {
 
 
-                    table.Rows.Add(proName.Text, pri_ce.Text, Tot.Text, numericUpDown1.Value.ToString(), DateTime.Today.ToString("ddMMyyyy"));
+                    table.Rows.Add(proName.Text, pri_ce.Text, Tot.Text, numericUpDown1.Value.ToString(), DateTime.Today.ToString("dd/MM/yyyy"));
                     dataGridView2.DataSource = table;
                     flag = 0;
                     total = Convert.ToInt16(numericUpDown1.Value) * Convert.ToInt16(pri_ce.Text);
@@ -170,29 +178,36 @@ namespace Cp3_Project
                 SqlCommand cmd = new SqlCommand(query, db.con);
                 cmd.ExecuteNonQuery();
                 db.con.Close();
-                FILLDGV();
+                FILLDGV(tablename);
             }
         }
         void savorder()
         {
-            
-            db.con.Open();
-            SqlCommand cmd = new SqlCommand("addorders", db.con);
-            cmd.CommandType = CommandType.StoredProcedure;
+            if (Total_sum.Text == "")
+            {
+                MessageBox.Show("Add to  orders First");
+}
+            else
+            {
+                db.con.Open();
+                SqlCommand cmd = new SqlCommand("addorders", db.con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@date", DateTime.Now);
-            cmd.Parameters.AddWithValue("@username", id.Trim());
-            cmd.Parameters.AddWithValue("@totalprice", Total_sum.Text.Trim());
+                cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@username", id.Trim());
+                cmd.Parameters.AddWithValue("@totalprice", Total_sum.Text.Trim());
 
 
-            cmd.ExecuteNonQuery();
-            MessageBox.Show("Order Added");
-            db.con.Close();
-            DataRow row = table.NewRow();
-            row["Total"] = sum;
-            table.Rows.Add(row);
-            getid();
-            save_csv();
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Order Added");
+                db.con.Close();
+                DataRow row = table.NewRow();
+
+                row["Total"] = sum;
+                table.Rows.Add(row);
+                getid();
+                save_csv();
+            }
             
 
         }
@@ -200,6 +215,10 @@ namespace Cp3_Project
         private void button1_Click(object sender, EventArgs e)
         {
             savorder();
+            db.con.Close();
+            numericUpDown1.Value = 0;
+            pri_ce.Text = "";
+            Tot.Text = "";
         }
 
 
@@ -207,8 +226,10 @@ namespace Cp3_Project
         {
             string ordername = value.Trim()+"-" + DateTime.Now.ToString("yyyyMMdd");
             string filePath = "C:\\Users\\48512\\source\\repos\\Order-Management-Application\\Cp3_Project\\Orders\\Orders" + ordername + ".csv";
-            using (StreamWriter writer = File.CreateText(filePath))
             
+            using (StreamWriter writer = File.CreateText(filePath))
+          
+
             {
                
                 foreach (DataColumn column in table.Columns)

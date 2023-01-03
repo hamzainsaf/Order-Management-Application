@@ -11,7 +11,10 @@ namespace Cp3_Project
 {
     public partial class Remove : Form
     {
-        MyConnection db = new MyConnection();
+     
+         MyConnection db = new MyConnection();
+        string tablename = "Inventory1";
+        
         public Remove()
         {
             InitializeComponent();
@@ -34,7 +37,12 @@ namespace Cp3_Project
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            if (e.RowIndex >= 0)
+            {
+              
+
+                textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            }
         }
 
         void Delete(string Namedel)

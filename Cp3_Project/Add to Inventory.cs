@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Cp3_Project
 {
@@ -25,7 +26,14 @@ namespace Cp3_Project
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != "" && comboBox1.Text != "" && textBox3.Text != "" && textBox4.Text != "")
+            
+            if (textBox1.Text.Contains(" ") && textBox3.Text.Contains(" ") && textBox4.Text.Contains(" "))
+            {
+                MessageBox.Show("Can not Have space");
+                Clear();
+
+            }
+           else if (textBox1.Text != "" && comboBox1.Text != "" && textBox3.Text != "" && textBox4.Text != "")
             {
                 using (db.con)
                 {
@@ -56,6 +64,7 @@ namespace Cp3_Project
                     
                 }
             }
+            
             else
             {
                 MessageBox.Show("Fill in the details");
@@ -74,9 +83,10 @@ namespace Cp3_Project
             V1.Show();
         }
 
-        
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
-        
+        }
     }
     
 }

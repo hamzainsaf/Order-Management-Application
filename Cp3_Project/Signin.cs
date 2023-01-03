@@ -20,22 +20,18 @@ namespace Cp3_Project
             db.con.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+            private void button2_Click(object sender, EventArgs e)
         {
             SignUp S = new SignUp();
             S.Show();
             this.Hide();
         }
 
-         
-            
-
-
     private void button1_Click(object sender, EventArgs e)
         {
             signin();
         }
-        void signin()
+       private void signin()
         {
 
             {

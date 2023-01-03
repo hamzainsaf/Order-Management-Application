@@ -160,6 +160,7 @@
             // 
             this.Total_sum.Location = new System.Drawing.Point(229, 445);
             this.Total_sum.Name = "Total_sum";
+            this.Total_sum.ReadOnly = true;
             this.Total_sum.Size = new System.Drawing.Size(125, 27);
             this.Total_sum.TabIndex = 17;
             // 
