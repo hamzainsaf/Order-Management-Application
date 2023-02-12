@@ -7,18 +7,29 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Security.Cryptography;
+using System.IO;
+using System.Configuration;
 
 namespace Cp3_Project
 {
     public partial class Signin : Form
     {
         MyConnection db = new MyConnection();
+        public static string pathApp = Application.StartupPath;
         public static string SetValueForText1 = "";
+       
+     
+
         public Signin()
         {
             InitializeComponent();
             db.con.Close();
+          
+           
         }
+
+
+       
 
             private void button2_Click(object sender, EventArgs e)
         {
@@ -33,7 +44,7 @@ namespace Cp3_Project
         }
        private void signin()
         {
-
+ 
             {
                 SqlCommand cmd = new SqlCommand("sp_userdata", db.con);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -55,7 +66,7 @@ namespace Cp3_Project
                                 Clear();
                                 return;
                             }
-                            else if (rd[4].ToString() == "Admin")
+                            else if (rd[1].ToString() == "Admin")
                             {
                                 MyConnection.type = "A";
                             }

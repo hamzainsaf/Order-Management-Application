@@ -11,6 +11,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Cp3_Project
 {
+
     public partial class Add_to_Inventory : Form
     {
         MyConnection db = new MyConnection();

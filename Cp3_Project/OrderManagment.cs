@@ -225,9 +225,9 @@ namespace Cp3_Project
         void save_csv()
         {
             string ordername = value.Trim()+"-" + DateTime.Now.ToString("yyyyMMdd");
-            string filePath = "C:\\Users\\48512\\source\\repos\\Order-Management-Application\\Cp3_Project\\Orders\\Orders" + ordername + ".csv";
-            
-            using (StreamWriter writer = File.CreateText(filePath))
+         //  string filePath = "C:\\Users\\48512\\source\\repos\\Order-Management-Application\\Cp3_Project\\Orders\\Orders" + ordername + ".csv";
+            string path = Application.StartupPath+"\\Orders\\Order"+ordername+".csv";
+            using (StreamWriter writer = File.CreateText(path))
           
 
             {
